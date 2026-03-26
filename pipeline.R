@@ -647,6 +647,9 @@ read_excel_to_dataset_list <- function(path) {
   wanted <- unique(norm_sheet(keys$sheet))
   sheets_keep <- sheets_keep[norm_sheet(sheets_keep) %in% wanted]
   
+  message("Processing: ", basename(path), " | sheets found: ", length(sheets_keep))
+  if (length(sheets_keep) == 0) return(NULL)
+  
   merges_by_sheet <- get_merge_ranges_from_xlsx(path)
   hidden_by_sheet <- get_hidden_cols_and_rows_from_xlsx(path)
   bad <- character(0)
