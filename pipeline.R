@@ -7,6 +7,7 @@ library(purrr)
 library(tibble)
 library(stringdist)
 library(jsonlite)
+library(ggplot2)
 
 rm(list=ls())
 
@@ -650,15 +651,23 @@ read_excel_to_dataset_list <- function(path) {
   hidden_by_sheet <- get_hidden_cols_and_rows_from_xlsx(path)
   bad <- character(0)
   
-  results <- map(sheets_keep, function(sh) {
-    tryCatch(
-      process_sheet(path, sh, merges_by_sheet[[sh]], hidden_by_sheet[[sh]]),
+  pb <- txtProgressBar(min = 0, max = length(sheets_keep), style = 3)
+  
+  results <- vector("list", length(sheets_keep))
+  for (i in seq_along(sheets_keep)) {
+    sh <- sheets_keep[[i]]
+    results[[i]] <- tryCatch(
+      suppressMessages(
+        process_sheet(path, sh, merges_by_sheet[[sh]], hidden_by_sheet[[sh]])
+      ),
       error = function(e) {
         bad <<- c(bad, paste0(sh, "  -->  ", conditionMessage(e)))
         NULL
       }
     )
-  })
+    setTxtProgressBar(pb, i)
+  }
+  close(pb)
   
   results <- compact(results)
   
@@ -687,7 +696,6 @@ read_excel_to_dataset_list <- function(path) {
   
   results
 }
-
 norm_sheet <- function(x) {
   x <- tolower(as.character(x))
   x <- str_trim(x)
