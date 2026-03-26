@@ -13,4 +13,4 @@ if (file.exists(old_name)) file.rename(old_name, dest_dir)
 
 message("Project downloaded and ready in: ", dest_dir)
 message("To run the analysis, paste this into the console and press Enter:")
-message('source("', file.path(dest_dir, "analysis.R"), '")')
+message('source("', normalizePath(file.path(dest_dir, "analysis.R"), winslash = "/"), '")')
