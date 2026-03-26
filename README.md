@@ -9,7 +9,7 @@ source("https://raw.githubusercontent.com/DimitrisVallis/CHI-Dashboard/main/setu
 ```
 
 3. When asked if you want to run the analysis, type `Y` and press Enter
-4. When prompted, type `predicted` or `estimates` and press Enter to choose the type of analysis
+4. After the datasets have been compiled, you will be prompted to type `predicted` or `estimates` and press Enter to choose the type of analysis
 
 ## Files
 
