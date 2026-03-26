@@ -9,8 +9,6 @@ library(stringdist)
 library(jsonlite)
 library(ggplot2)
 
-rm(list=ls())
-
 #matching
 min_score <- 0.58
 
