@@ -1,3 +1,15 @@
+
+
+required_packages <- c("sandwich", "lmtest", "stringr", "readxl", "dplyr",
+                       "purrr", "tibble", "stringdist", "jsonlite", "ggplot2")
+
+missing_packages <- required_packages[!required_packages %in% installed.packages()[, "Package"]]
+
+if (length(missing_packages) > 0) {
+  message("Installing missing packages: ", paste(missing_packages, collapse = ", "))
+  install.packages(missing_packages)
+}
+
 library(sandwich)
 library(lmtest)
 library(stringr)
@@ -7,7 +19,8 @@ library(purrr)
 library(tibble)
 library(stringdist)
 library(jsonlite)
-library(ggplot2)
+
+rm(list=ls())
 
 #matching
 min_score <- 0.58
@@ -645,30 +658,19 @@ read_excel_to_dataset_list <- function(path) {
   wanted <- unique(norm_sheet(keys$sheet))
   sheets_keep <- sheets_keep[norm_sheet(sheets_keep) %in% wanted]
   
-  message("Processing: ", basename(path), " | sheets found: ", length(sheets_keep))
-  if (length(sheets_keep) == 0) return(NULL)
-  
   merges_by_sheet <- get_merge_ranges_from_xlsx(path)
   hidden_by_sheet <- get_hidden_cols_and_rows_from_xlsx(path)
   bad <- character(0)
   
-  pb <- txtProgressBar(min = 0, max = length(sheets_keep), style = 3)
-  
-  results <- vector("list", length(sheets_keep))
-  for (i in seq_along(sheets_keep)) {
-    sh <- sheets_keep[[i]]
-    results[[i]] <- tryCatch(
-      suppressMessages(
-        process_sheet(path, sh, merges_by_sheet[[sh]], hidden_by_sheet[[sh]])
-      ),
+  results <- map(sheets_keep, function(sh) {
+    tryCatch(
+      process_sheet(path, sh, merges_by_sheet[[sh]], hidden_by_sheet[[sh]]),
       error = function(e) {
         bad <<- c(bad, paste0(sh, "  -->  ", conditionMessage(e)))
         NULL
       }
     )
-    setTxtProgressBar(pb, i)
-  }
-  close(pb)
+  })
   
   results <- compact(results)
   
@@ -697,16 +699,15 @@ read_excel_to_dataset_list <- function(path) {
   
   results
 }
+
 norm_sheet <- function(x) {
   x <- tolower(as.character(x))
   x <- str_trim(x)
-  # Remove date suffix like " - Jan-Mar 19" only if present
-  x <- str_replace(x, "\\s*-\\s*[a-z]{3}[a-z0-9\\s-]*$", "")
-  x <- str_trim(x)
-  # remove all non-alphanumeric characters
+  # remove all non-alphanumeric characters (dashes, spaces, brackets, etc., like "TA1_" instead of "TA1")
   x <- str_replace_all(x, "[^a-z0-9]+", "")
   x
 }
+
 norm_txt <- function(x) {
   x <- paste(as.character(x), collapse = " ")
   x <- tolower(x)
