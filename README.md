@@ -8,9 +8,8 @@
 source("https://raw.githubusercontent.com/DimitrisVallis/CHI-Dashboard/main/setup.R")
 ```
 
-3. Follow the instructions printed in the console to run the analysis.
-
-When prompted, type `predicted` or `estimates` and press Enter to choose the type of analysis.
+3. When asked if you want to run the analysis, type `Y` and press Enter
+4. When prompted, type `predicted` or `estimates` and press Enter to choose the type of analysis
 
 ## Files
 
