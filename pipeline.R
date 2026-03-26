@@ -702,11 +702,13 @@ read_excel_to_dataset_list <- function(path) {
 norm_sheet <- function(x) {
   x <- tolower(as.character(x))
   x <- str_trim(x)
-  # remove all non-alphanumeric characters (dashes, spaces, brackets, etc., like "TA1_" instead of "TA1")
+  # Remove date suffix like " - Jan-Mar 19" only if present
+  x <- str_replace(x, "\\s*-\\s*[a-z]{3}[a-z0-9\\s-]*$", "")
+  x <- str_trim(x)
+  # remove all non-alphanumeric characters
   x <- str_replace_all(x, "[^a-z0-9]+", "")
   x
 }
-
 norm_txt <- function(x) {
   x <- paste(as.character(x), collapse = " ")
   x <- tolower(x)
