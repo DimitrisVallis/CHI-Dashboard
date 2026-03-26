@@ -262,3 +262,4 @@ plots <- setNames(map(sheets_in_results, function(sh) {
 }), sheets_in_results)
 
 
+for (sh in sheets_in_results) print(plots[[sh]])
