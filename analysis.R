@@ -3,6 +3,8 @@
 
 source("pipeline.R")
 
+print("Conducting analysis..")
+
 # Set options
 extra_covariate <- NULL
 reference_period <- NULL
@@ -260,33 +262,3 @@ plots <- setNames(map(sheets_in_results, function(sh) {
 }), sheets_in_results)
 
 
-for (sh in sheets_in_results) print(plots[[sh]])
-
-
-
-# Check actual sheet names in that file
-names(datasets_by_file[["Detailed_LA_202109"]])
-
-# Then check the col_map for a8 - find the right sheet name first
-attr(datasets_by_file[["Detailed_LA_202109"]][["A8"]], "col_map") %>% print(n = Inf)
-
-# Check what Not_known_Not_known actually contains in that file
-datasets_by_file[["Detailed_LA_202109"]][["A8"]] %>%
-  filter(str_detect(as.character(Region_code), "E07000223")) %>%
-  select(Region_code, Region_name, contains("Not_known"), contains("known")) %>%
-  print(width = Inf)
-
-
-
-all_key_matches %>%
-  filter(file_id == "Detailed_LA_202109", sheet == "a8", key_id == "not_known") %>%
-  print(width = Inf)
-
-# Also see full col_map to spot any suspicious columns
-matches_by_file[["Detailed_LA_202109"]] %>%
-  filter(sheet == "a8") %>%
-  print(n = Inf, width = Inf)
-
-
-length(file_paths)
-file_paths
