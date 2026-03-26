@@ -1,0 +1,38 @@
+---
+title: "README"
+author: "D VALLIS"
+date: "2026-03-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Requirements
+
+Install R packages:
+  ```r
+install.packages(c("sandwich", "lmtest", "stringr", "readxl", "dplyr",
+                   "purrr", "tibble", "stringdist", "jsonlite", "ggplot2"))
+```
+
+## How to run
+
+1. Clone this repository
+2. Open R or RStudio with the repo root as your working directory
+3. To run the full pipeline and analysis:
+  ```r
+source("analysis.R")
+```
+
+Or run just the data pipeline:
+  ```r
+source("pipeline.R")
+```
+
+## Files
+
+- `pipeline.R` — downloads XLSX files from GitHub, parses them, and produces `combined_by_sheet`
+- `analysis.R` — runs regressions and plots results (sources `pipeline.R` automatically)
+- `keys.R` — column matching definitions
