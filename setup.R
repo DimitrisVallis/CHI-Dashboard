@@ -8,8 +8,17 @@ download.file(repo_zip, destfile = dest_zip, mode = "wb")
 message("Unzipping...")
 unzip(dest_zip, exdir = tempdir())
 
-analysis_path <- normalizePath(file.path(dest_dir, "analysis.R"), winslash = "/", mustWork = FALSE)
-
 message("Project ready.")
-message("To run the analysis, paste this into the console and press Enter:")
-message('source("', analysis_path, '")')
+
+run <- str_trim(toupper(readline(prompt = "Run the analysis now? (Y/N): ")))
+while (!run %in% c("Y", "N")) {
+  message("Invalid input. Please type Y or N.")
+  run <- str_trim(toupper(readline(prompt = "Run the analysis now? (Y/N): ")))
+}
+
+if (run == "Y") {
+  source(file.path(dest_dir, "analysis.R"))
+} else {
+  message("To run the analysis later, paste this into the console and press Enter:")
+  message('source("', normalizePath(file.path(dest_dir, "analysis.R"), winslash = "/"), '")')
+}
