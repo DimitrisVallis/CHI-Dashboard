@@ -38,6 +38,5 @@ if (run == "Y") {
   source(file.path(dest_dir, "analysis.R"))
 } else {
   message("To run the analysis later, paste this into the console and press Enter:")
-  }
   message('setwd("', dest_dir, '"); source("', normalizePath(file.path(dest_dir, "analysis.R"), winslash = "/"), '")')
 }
