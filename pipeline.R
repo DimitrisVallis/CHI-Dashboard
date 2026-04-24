@@ -837,7 +837,7 @@ key_row <- function(key_id, sheet, excel_col, header_patterns, label = NA_charac
   )
 }
 
-source("keys.R")
+source(file.path(base_dir, "keys.R"))  #<-- change to actual filename
 
 keys <- keys %>% mutate(sheet = norm_sheet(sheet))
 
