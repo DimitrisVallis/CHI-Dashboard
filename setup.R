@@ -30,9 +30,9 @@ unzip(dest_zip, exdir = tempdir())
 message("Project ready.")
 
 plot_type <- ""
-while (!plot_type %in% c("predicted", "estimates")) {
-  plot_type <- str_trim(tolower(readline(prompt = "Enter plot type - type 'predicted' or 'estimates' and press Enter: ")))
-  if (!plot_type %in% c("predicted", "estimates")) message("Invalid choice. Please type 'predicted' or 'estimates'.")
+while (!plot_type %in% c("means", "estimates")) {
+  plot_type <- str_trim(tolower(readline(prompt = "Enter plot type - type 'means' or 'estimates' and press Enter: ")))
+  if (!plot_type %in% c("means", "estimates")) message("Invalid choice. Please type 'means' or 'estimates'.")
 }
 message("Running analysis with plot type: ", plot_type)
 
