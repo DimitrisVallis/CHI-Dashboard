@@ -8,8 +8,8 @@ message("Data pipeline complete.")
 # Set options
 extra_covariate <- NULL
 reference_period <- NULL
-if (!exists("plot_type") || !plot_type %in% c("predicted", "estimates")) {
-  stop("plot_type must be set to 'predicted' or 'estimates' before sourcing analysis.R")
+if (!exists("plot_type") || !plot_type %in% c("means", "estimates")) {
+  stop("plot_type must be set to 'means' or 'estimates' before sourcing analysis.R")
 }
 message("Running analysis with plot type: ", plot_type)
 
