@@ -31,15 +31,13 @@ while (!run %in% c("Y", "N")) {
   message("Invalid input. Please type Y or N.")
   run <- str_trim(toupper(readline(prompt = "Run the analysis now? (Y/N): ")))
 }
-
 if (run == "Y") {
   old_wd <- setwd(dest_dir)
   on.exit(setwd(old_wd))
   source(file.path(dest_dir, "analysis.R"))
 } else {
-  later_cmd <- paste0('setwd("', dest_dir, '"); source("', 
-                      normalizePath(file.path(dest_dir, "analysis.R"), winslash = "/"), '")')
+  analysis_path <- normalizePath(file.path(dest_dir, "analysis.R"), winslash = "/")
+  later_cmd <- sprintf("setwd('%s'); source('%s')", dest_dir, analysis_path)
   message("To run the analysis later, paste this into the console and press Enter:")
   message(later_cmd)
-} '"); source("', normalizePath(file.path(dest_dir, "analysis.R"), winslash = "/"), '")')
 }
