@@ -8,10 +8,8 @@ message("Data pipeline complete.")
 # Set options
 extra_covariate <- NULL
 reference_period <- NULL
-plot_type <- readline(prompt = "Enter plot type - type 'predicted' or 'estimates' and press Enter: ")
-while (!plot_type %in% c("predicted", "estimates")) {
-  message("Invalid choice. Please type 'predicted' or 'estimates'.")
-  plot_type <- readline(prompt = "Enter plot type - type 'predicted' or 'estimates' and press Enter: ")
+if (!exists("plot_type") || !plot_type %in% c("predicted", "estimates")) {
+  stop("plot_type must be set to 'predicted' or 'estimates' before sourcing analysis.R")
 }
 message("Running analysis with plot type: ", plot_type)
 
