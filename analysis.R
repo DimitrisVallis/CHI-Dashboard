@@ -1,7 +1,7 @@
 
 #1.SOURCE THE PIPELINE
 
-source("pipeline.R")
+source(file.path(dirname(sys.frame(1)$ofile), "pipeline.R"))
 
 message("Data pipeline complete.")
 
