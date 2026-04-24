@@ -1,14 +1,10 @@
-
 required_packages <- c("sandwich", "lmtest", "stringr", "readxl", "dplyr",
-                       "purrr", "tibble", "stringdist", "jsonlite", "ggplot2","stringr")
-
+                       "purrr", "tibble", "stringdist", "jsonlite", "ggplot2", "stringr")
 missing_packages <- required_packages[!required_packages %in% installed.packages()[, "Package"]]
-
 if (length(missing_packages) > 0) {
   message("Installing missing packages: ", paste(missing_packages, collapse = ", "))
   install.packages(missing_packages)
 }
-
 library(sandwich)
 library(lmtest)
 library(stringr)
@@ -26,10 +22,8 @@ dest_dir <- normalizePath(file.path(tempdir(), "CHI-Dashboard-main"), winslash =
 
 message("Downloading project...")
 download.file(repo_zip, destfile = dest_zip, mode = "wb")
-
 message("Unzipping...")
 unzip(dest_zip, exdir = tempdir())
-
 message("Project ready.")
 
 run <- str_trim(toupper(readline(prompt = "Run the analysis now? (Y/N): ")))
@@ -45,6 +39,4 @@ if (run == "Y") {
 } else {
   message("To run the analysis later, paste this into the console and press Enter:")
   message('setwd("', dest_dir, '"); source("', normalizePath(file.path(dest_dir, "analysis.R"), winslash = "/"), '")')
-}
-  message('source("', normalizePath(file.path(dest_dir, "analysis.R"), winslash = "/"), '")')
 }
