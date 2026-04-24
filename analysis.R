@@ -196,7 +196,7 @@ run_one_regression_estimates <- function(sheet_name, outcome_col, extra_cov = NU
 }
 
 #RUN REGRESSIONS
-run_fn <- if (plot_type == "predicted") run_one_regression else run_one_regression_estimates
+run_fn <- if (plot_type == "means") run_one_regression else run_one_regression_estimates
 
 results_list <- map(outcomes_to_run, function(x) {
   run_fn(sheet_name  = x$sheet,
@@ -216,7 +216,7 @@ if (nrow(marginal_effects) == 0) stop("No results to plot.")
 
 #PLOT: one faceted grid per sheet, estimates annotated at each point
 
-y_label <- if (plot_type == "predicted") "Predicted mean (95% CI)" else "Coefficient vs. reference period (95% CI)"
+y_label <- if (plot_type == "means") "Mean (95% CI)" else "Coefficient vs. reference period (95% CI)"
 
 subtitle_txt <- paste0(
   if (plot_type == "estimates") paste0("Reference: ", if (!is.null(reference_period)) reference_period else "earliest available", "  |  ") else "",
@@ -244,12 +244,12 @@ plots <- setNames(map(sheets_in_results, function(sh) {
     facet_wrap(~ label, scales = "free_y", ncol = 2) +
     labs(
       title    = paste0("Sheet: ", toupper(sh), " — ",
-                        if (plot_type == "predicted") "Predicted Means" else "Regression Estimates",
+                        if (plot_type == "means") "Means" else "Regression Estimates",
                         " by Time Period"),
       subtitle = subtitle_txt,
       x        = "Quarter",
       y        = y_label,
-      caption  = if (plot_type == "predicted") {
+      caption  = if (plot_type == "means") {
         "95% CIs via delta method. SEs clustered on Region_code."
       } else {
         "95% CIs. SEs clustered on Region_code. Red points = p < 0.05 vs reference period."
