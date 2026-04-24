@@ -1,3 +1,25 @@
+
+required_packages <- c("sandwich", "lmtest", "stringr", "readxl", "dplyr",
+                       "purrr", "tibble", "stringdist", "jsonlite", "ggplot2","stringr")
+
+missing_packages <- required_packages[!required_packages %in% installed.packages()[, "Package"]]
+
+if (length(missing_packages) > 0) {
+  message("Installing missing packages: ", paste(missing_packages, collapse = ", "))
+  install.packages(missing_packages)
+}
+
+library(sandwich)
+library(lmtest)
+library(stringr)
+library(readxl)
+library(dplyr)
+library(purrr)
+library(tibble)
+library(stringdist)
+library(jsonlite)
+library(stringr)
+
 repo_zip <- "https://github.com/DimitrisVallis/CHI-Dashboard/archive/refs/heads/main.zip"
 dest_zip <- file.path(tempdir(), "CHI-Dashboard.zip")
 dest_dir <- normalizePath(file.path(tempdir(), "CHI-Dashboard-main"), winslash = "/", mustWork = FALSE)
@@ -17,8 +39,12 @@ while (!run %in% c("Y", "N")) {
 }
 
 if (run == "Y") {
+  old_wd <- setwd(dest_dir)
+  on.exit(setwd(old_wd))
   source(file.path(dest_dir, "analysis.R"))
 } else {
   message("To run the analysis later, paste this into the console and press Enter:")
+  message('setwd("', dest_dir, '"); source("', normalizePath(file.path(dest_dir, "analysis.R"), winslash = "/"), '")')
+}
   message('source("', normalizePath(file.path(dest_dir, "analysis.R"), winslash = "/"), '")')
 }
