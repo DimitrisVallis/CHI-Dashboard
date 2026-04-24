@@ -1,6 +1,6 @@
 
 #1.SOURCE THE PIPELINE
-base_dir <- dirname(sys.frame(1)$ofile)
+base_dir <- normalizePath(file.path(tempdir(), "CHI-Dashboard-main"), winslash = "/")
 source(file.path(base_dir, "pipeline.R"))
 
 message("Data pipeline complete.")
@@ -14,7 +14,7 @@ if (!exists("plot_type") || !plot_type %in% c("predicted", "estimates")) {
 message("Running analysis with plot type: ", plot_type)
 
 
-source(file.path(base_dir, "keys.R"))  # <-- change to actual filename
+source(file.path(base_dir, "keys.R"))  #<-- change to actual filename
 keys <- keys %>% mutate(sheet = norm_sheet(sheet))
 
 
