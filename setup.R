@@ -20,6 +20,9 @@ repo_zip <- "https://github.com/DimitrisVallis/CHI-Dashboard/archive/refs/heads/
 dest_zip <- file.path(tempdir(), "CHI-Dashboard.zip")
 dest_dir <- normalizePath(file.path(tempdir(), "CHI-Dashboard-main"), winslash = "/", mustWork = FALSE)
 
+message("Cleaning up old files...")
+if (file.exists(dest_zip)) file.remove(dest_zip)
+if (dir.exists(dest_dir)) unlink(dest_dir, recursive = TRUE)
 message("Downloading project...")
 download.file(repo_zip, destfile = dest_zip, mode = "wb")
 message("Unzipping...")
