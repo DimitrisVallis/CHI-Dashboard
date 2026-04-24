@@ -1,27 +1,5 @@
 
 
-required_packages <- c("sandwich", "lmtest", "stringr", "readxl", "dplyr",
-                       "purrr", "tibble", "stringdist", "jsonlite", "ggplot2")
-
-missing_packages <- required_packages[!required_packages %in% installed.packages()[, "Package"]]
-
-if (length(missing_packages) > 0) {
-  message("Installing missing packages: ", paste(missing_packages, collapse = ", "))
-  install.packages(missing_packages)
-}
-
-library(sandwich)
-library(lmtest)
-library(stringr)
-library(readxl)
-library(dplyr)
-library(purrr)
-library(tibble)
-library(stringdist)
-library(jsonlite)
-
-rm(list=ls())
-
 #matching
 min_score <- 0.58
 
