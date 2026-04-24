@@ -24,7 +24,14 @@ message("Downloading project...")
 download.file(repo_zip, destfile = dest_zip, mode = "wb")
 message("Unzipping...")
 unzip(dest_zip, exdir = tempdir())
-message("Project ready. Running analysis...")
+message("Project ready.")
+
+plot_type <- ""
+while (!plot_type %in% c("predicted", "estimates")) {
+  plot_type <- str_trim(tolower(readline(prompt = "Enter plot type - type 'predicted' or 'estimates' and press Enter: ")))
+  if (!plot_type %in% c("predicted", "estimates")) message("Invalid choice. Please type 'predicted' or 'estimates'.")
+}
+message("Running analysis with plot type: ", plot_type)
 
 old_wd <- setwd(dest_dir)
 on.exit(setwd(old_wd))
