@@ -37,7 +37,7 @@ if (run == "Y") {
   source(file.path(dest_dir, "analysis.R"))
 } else {
   analysis_path <- normalizePath(file.path(dest_dir, "analysis.R"), winslash = "/")
-  later_cmd <- sprintf("setwd('%s'); source('%s')", dest_dir, analysis_path)
-  message("To run the analysis later, paste this into the console and press Enter:")
-  message(later_cmd)
+  message("To run the analysis later, run these two lines in your console:")
+  message(paste("setwd(", deparse(dest_dir), ")"))
+  message(paste("source(", deparse(analysis_path), ")"))
 }
