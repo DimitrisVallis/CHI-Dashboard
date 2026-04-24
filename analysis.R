@@ -1,7 +1,7 @@
 
 #1.SOURCE THE PIPELINE
-
-source(file.path(dirname(sys.frame(1)$ofile), "pipeline.R"))
+base_dir <- dirname(sys.frame(1)$ofile)
+source(file.path(base_dir, "pipeline.R"))
 
 message("Data pipeline complete.")
 
@@ -16,7 +16,7 @@ while (!plot_type %in% c("predicted", "estimates")) {
 message("Running analysis with plot type: ", plot_type)
 
 
-source("keys.R")  # <-- change to actual filename
+source(file.path(base_dir, "keys.R"))  # <-- change to actual filename
 keys <- keys %>% mutate(sheet = norm_sheet(sheet))
 
 
