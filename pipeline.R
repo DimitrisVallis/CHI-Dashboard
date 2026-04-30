@@ -23,6 +23,7 @@ clean_names_safe <- function(x) {
   x <- as.character(x)
   x <- str_trim(x)
   x <- str_replace_all(x, "[\r\n\t]", " ")
+  x <- str_replace_all(x, "\\d*(,\\s*\\d+){2,}$", "") 
   x <- str_replace_all(x, "(\\d+)\\+", "\\1_plus")   # 75+ -> 75_plus
   x <- str_replace_all(x, "[^A-Za-z0-9]+", "_")
   x <- str_replace_all(x, "_+", "_")
@@ -151,6 +152,7 @@ build_colnames <- function(mat, header_rows, col_idx) {
   if (!is.matrix(hdr)) hdr <- matrix(hdr, nrow = 1)
   
   clean_number_context <- function(txt) {
+    txt <- gsub("\\d*(,\\s*\\d+){2,}$", "", txt) 
     txt <- gsub("(\\d+)\\+", "\\1_plus", txt)                          # 75+ -> 75_plus
     txt <- gsub("(\\d+)-(\\d+)", "\\1_\\2", txt)                       # 16-17 -> 16_17 (already was there)
     txt <- gsub("(?<=[a-zA-Z)])\\d+|\\d+(?=[a-zA-Z])", "", txt, perl = TRUE)  # strip footnote digits only
